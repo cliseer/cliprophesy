@@ -19,7 +19,7 @@ class AnthropicBackend:
 
     def get_suggestions(self, current_line: str, history: List[str], extended_history: List[str]=[], stdin="", pwd="", status="", env="", test_request: bool = False) -> List[str]:
         """Get command suggestions based on current line and history."""
-        prompt = self._build_prompt(current_line, history)
+        prompt = self._build_prompt(current_line, history, extended_history, stdin, pwd, status, env)
 
         if DEBUG:
             print(prompt)
@@ -56,9 +56,9 @@ class AnthropicBackend:
                 print(e)
             return []
 
-    def _build_prompt(self, current_line: str, history: List[str]) -> str:
+    def _build_prompt(self, current_line: str, history: List[str], extended_history: List[str]=[], stdin="", pwd="", status="", env="") -> str:
         """Build the prompt for the LLM."""
         recent_history = history[-20:] if len(history) > 20 else history
-        recent_history = ''.join(recent_history)
+        recent_history = '\n'.join(recent_history)
 
-        return prompts.PROMPT4.format(history=recent_history, current_line=current_line)
+        return prompts.PROMPT.format(current_line=current_line, history=recent_history, stdin=stdin, pwd=pwd, status=status, env=env)

@@ -2,7 +2,7 @@ import argparse
 import logging
 
 import common
-from inputs import ShellReader
+from inputs import ShellReader, formatting
 
 
 
@@ -12,6 +12,8 @@ def get_completions(command, backend, debug):
     context = reader.get_context()
     return backend.get_suggestions(command, test_request=False, **context)
 
+def format_suggestions(suggestions):
+    return formatting.PrettySuggestionFormatter.format_suggestions(suggestions)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -26,7 +28,7 @@ if __name__ == '__main__':
         import logging
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         start = time.time()
-    for suggestion in get_completions(args.current_line, args.backend, args.debug):
+    for suggestion in format_suggestions(get_completions(args.current_line, args.backend, args.debug)):
         print(suggestion)
     if args.debug:
         latency = time.time() - start
