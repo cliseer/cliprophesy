@@ -15,7 +15,7 @@ def get_completions(command, backend, debug):
 def format_suggestions(suggestions):
     return formatting.PrettySuggestionFormatter.format_suggestions(suggestions)
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("current_line")
     parser.add_argument("--shell", default="fish")
@@ -33,4 +33,7 @@ if __name__ == '__main__':
     if args.debug:
         latency = time.time() - start
         logging.info(f"Latency {latency}")
-        #logging.INFO(f"Total elapsed time {latency}")
+
+
+if __name__ == '__main__':
+    main()
