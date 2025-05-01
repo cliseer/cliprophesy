@@ -6,7 +6,7 @@ import time
 
 from typing import List
 
-from . import prompts
+from cliprophesy.llms import prompts
 
 DEBUG = True
 

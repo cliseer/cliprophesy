@@ -1,10 +1,7 @@
 import argparse
-import logging
 
-import common
-from inputs import ShellReader, formatting
-
-
+from cliprophesy import common
+from cliprophesy.inputs import ShellReader, formatting
 
 def get_completions(command, backend, debug):
     backend = common.get_backend(backend)
@@ -15,7 +12,7 @@ def get_completions(command, backend, debug):
 def format_suggestions(suggestions):
     return formatting.PrettySuggestionFormatter.format_suggestions(suggestions)
 
-def main():
+def run():
     parser = argparse.ArgumentParser()
     parser.add_argument("current_line")
     parser.add_argument("--shell", default="fish")
@@ -36,4 +33,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    run()

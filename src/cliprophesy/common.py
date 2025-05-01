@@ -1,4 +1,4 @@
-from llms import anthropic_backend
+from cliprophesy.llms import anthropic_backend
 
 
 def get_backend(llm_backend):

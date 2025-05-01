@@ -1,6 +1,6 @@
 [project]
 name = "cliprophesy"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="Yaron Greif", email="ygreif@gmail.com" },
 ]
@@ -27,4 +27,4 @@ build-backend = "hatchling.build"
 packages = ["src/cliprophesy"]
 
 [project.scripts]
-cliprophesy = "cliprophesy.cliprophesy:main"
+cliprophesy = "cliprophesy.main:run"
