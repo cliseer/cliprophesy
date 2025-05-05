@@ -17,11 +17,11 @@ class AnthropicBackend:
         self.api_key = os.environ.get("ANTHROPIC_API_KEY")
         self.model = os.environ.get("ANTHROPIC_MODEL", model)
 
-    def get_suggestions(self, current_line: str, history: List[str], extended_history: List[str], stdin="", pwd="", status="", env="", test_request: bool = False) -> List[str]:
+    def get_suggestions(self, current_line: str, history: List[str], extended_history: List[str], stdin="", pwd="", status="", env="", test_request: bool = False, debug: bool = False) -> List[str]:
         """Get command suggestions based on current line and history."""
         prompt = self._build_prompt(current_line, history, extended_history, stdin, pwd, status, env)
 
-        if DEBUG:
+        if debug:
             print(prompt)
         try:
             start_time = time.perf_counter()
@@ -40,8 +40,6 @@ class AnthropicBackend:
                 timeout=10
             )
             end_time = time.perf_counter()
-            latency = end_time - start_time
-            print(f"Latency: {latency:.6f} seconds")
             data = response.json()
             text = data["content"][0]["text"].strip()
             # Parse the raw suggestions
