@@ -70,12 +70,9 @@ Command line buffer: docker ls
 Quick Thoughts: The user is trying to list the docker processes
 docker ps # This command will list all running containers on your system. It's similar to `docker ls`, but `docker ps` is the more commonly used command
 docker ps -a # This will list all containers, both running and stopped
+----------------------------------------------------------------------------------------------------------------------------
 
 ## Input
-
-Here is the users input:
-
-==============
 
 {input_format_actual}
 """.format(input_format_prompt=INPUT_FORMAT_PROMPT, input_format_actual=INPUT_FORMAT_ACTUAL)
