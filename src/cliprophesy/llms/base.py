@@ -19,7 +19,7 @@ class BaseBackend:
                 suggestions = self.get_suggestions_internal_extended(current_line, history, extended_history, stdin, pwd, status, env, test_request, debug)
             if debug:
                 end_time = time.perf_counter()
-                print("Latency", end_time - start_time)
+                print("backend call latency", end_time - start_time)
             return suggestions
         except Exception as e:
             if debug:

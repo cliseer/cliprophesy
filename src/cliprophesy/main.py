@@ -3,13 +3,20 @@ import argparse
 from cliprophesy import common
 from cliprophesy.inputs import ShellReader, formatting
 
-def get_completions(command, backend, debug):
-    reader = ShellReader.FishShellReader()
+def get_completions(command, shell, backend, debug):
+    reader = ShellReader.FishShellReader() if shell == 'fish' else ShellReader.ZshShellReader()
     context = reader.get_context()
     return backend.get_suggestions(command, test_request=False, debug=debug, **context)
 
 def format_suggestions(suggestions):
     return formatting.PrettySuggestionFormatter.format_suggestions(suggestions)
+
+def suggestion_flow(current_line, shell, backend, config_fname, debug):
+    backend = common.get_backend_from_args(backend, config_fname)
+    for suggestion in format_suggestions(get_completions(current_line, shell, backend, debug)):
+        if not debug and 'quick thoughts' in suggestion.lower():
+            continue
+        print(suggestion)
 
 def run():
     parser = argparse.ArgumentParser()
@@ -26,14 +33,10 @@ def run():
             import logging
             logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
             start = time.time()
-        backend = common.get_backend_from_args(args.backend, args.config)
-        for suggestion in format_suggestions(get_completions(args.current_line, backend, args.debug)):
-            if not args.debug and 'quick thoughts' in suggestion.lower():
-                continue
-            print(suggestion)
+        suggestion_flow(args.current_line, args.shell, args.backend, args.config, args.debug)
         if args.debug:
             latency = time.time() - start
-            logging.info(f"Latency {latency}")
+            print(f"Overall latency {latency}")
         return 0
     except Exception as e:
         if args.debug:

@@ -8,7 +8,7 @@ REMOTE_URL = "https://www.shbuddy.com/v1/completion"
 class CLIBuddyInterface(BaseBackend):
     MODE = 'FULL'
 
-    def __init__(self, url=REMOTE_URL, allow_stdin=False):
+    def __init__(self, url=REMOTE_URL, allow_stdin=True):
         self._url = url
         self._allow_stdin = allow_stdin
 
@@ -23,11 +23,11 @@ class CLIBuddyInterface(BaseBackend):
             "pwd": pwd,
             "buffer": current_line,
             "env": env,
-            "status": status,
+            "status": 0 or int(status),
             "test_request": debug
         }
         response = requests.post(self._url, json=data, timeout=10)
-        if (debug or test_request) and not 'completions' in response:
-            raise Exception(data['msg'])
+        if (debug or test_request) and not 'completions' in response.json():
+            raise Exception(response.text)
         data = response.json()
         return data['completions']
