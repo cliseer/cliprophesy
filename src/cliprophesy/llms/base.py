@@ -16,7 +16,7 @@ class BaseBackend:
                     print(prompt)
                 suggestions = self.get_suggestions_internal(prompt)
             else:
-                suggestions = self.get_suggestions_internal_extended(current_line, history, extended_history, stdin, pwd, status, env)
+                suggestions = self.get_suggestions_internal_extended(current_line, history, extended_history, stdin, pwd, status, env, test_request, debug)
             if debug:
                 end_time = time.perf_counter()
                 print("Latency", end_time - start_time)
@@ -31,7 +31,7 @@ class BaseBackend:
         raise Exception("Not implemented")
 
     @abstractmethod
-    def get_suggestions_internal_extended(self, current_line: str, history: List[str], extended_history: List[str], stdin="", pwd="", status="", env="", test_request: bool = False, debug: bool = False):
+    def get_suggestions_internal_extended(self, current_line: str, history: List[str], extended_history: List[str], stdin="", pwd="", status="", env="", test_request: bool = False, debug: bool = False) -> List[str]:
         raise Exception("Not implemented")
 
     def _build_prompt(self, current_line: str, history, extended_history=[], stdin="", pwd="", status="", env="") -> str:
