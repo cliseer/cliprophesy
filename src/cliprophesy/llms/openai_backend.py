@@ -1,6 +1,5 @@
 import os
 import requests
-import time
 from typing import List
 from cliprophesy.llms import base
 
@@ -10,7 +9,6 @@ class OpenAIBackend(base.BaseBackend):
         self.model = os.environ.get("OPENAI_MODEL", model)
 
     def get_suggestions_internal(self, prompt:str) -> List[str]:
-        start_time = time.perf_counter()
         response = requests.post(
             "https://api.openai.com/v1/chat/completions",
             headers={
@@ -30,6 +28,5 @@ class OpenAIBackend(base.BaseBackend):
         text = data["choices"][0]["message"]["content"].strip()
         end_time = time.perf_counter()
         latency = end_time - start_time
-        print(f"Latency: {latency:.6f} seconds")
         return [line.strip("1234567890.:- ").strip()
                 for line in text.splitlines() if line.strip()]
