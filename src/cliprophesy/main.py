@@ -6,7 +6,7 @@ from cliprophesy.inputs import ShellReader, formatting
 def get_completions(command, backend, debug):
     reader = ShellReader.FishShellReader()
     context = reader.get_context()
-    return backend.get_suggestions(command, test_request=False, **context)
+    return backend.get_suggestions(command, test_request=False, debug=debug, **context)
 
 def format_suggestions(suggestions):
     return formatting.PrettySuggestionFormatter.format_suggestions(suggestions)

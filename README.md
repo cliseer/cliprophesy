@@ -10,7 +10,7 @@ A CLI tool that suggests commands based on your shell history.
 ** python3 -m twine upload --repository testpypi dist/* --verbose
 
 * Developing
-** PYTHONPATH=. python main.py <command>
+** PYTHONPATH=. python cliprophesy/main.py <command> # run from /src
 ** Use absolute imports
 
 ## License
