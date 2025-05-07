@@ -22,7 +22,7 @@ fi
 
 # --- Install pyinstaller and build ---
 pip install pyinstaller
-pyinstaller --onefile cliprophesy.py
+pyinstaller --onefile main.py
 
 # --- Find a good install location ---
 OS_TYPE="$(uname)"
@@ -81,7 +81,7 @@ if [ -z "$TARGET_DIR" ]; then
 fi
 
 # --- Move the built binary ---
-BUILT_FILE="dist/cliprophesy"
+BUILT_FILE="dist/main"
 if [ ! -f "$BUILT_FILE" ]; then
     echo "Error: Build failed. $BUILT_FILE not found."
     deactivate

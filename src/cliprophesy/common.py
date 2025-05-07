@@ -18,4 +18,4 @@ def get_backend(llm_str):
         return openai_backend.OpenAIBackend()
     elif llm_str == 'clibuddy':
         return clibuddy.CLIBuddyInterface(allow_stdin=False)
-    return openai_backend.OpenAIBackend()
+    return anthropic_backend.AnthropicBackend()

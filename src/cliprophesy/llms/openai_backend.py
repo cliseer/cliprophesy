@@ -26,7 +26,5 @@ class OpenAIBackend(base.BaseBackend):
         )
         data = response.json()
         text = data["choices"][0]["message"]["content"].strip()
-        end_time = time.perf_counter()
-        latency = end_time - start_time
         return [line.strip("1234567890.:- ").strip()
                 for line in text.splitlines() if line.strip()]
