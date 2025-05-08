@@ -3,7 +3,7 @@ import requests
 from cliprophesy.llms.base import BaseBackend
 from typing import List
 
-REMOTE_URL = "https://www.shbuddy.com/v1/completion"
+REMOTE_URL = "https://cliseer-fastapi.fly.dev/v1/completion"
 
 class CLIBuddyInterface(BaseBackend):
     MODE = 'FULL'
@@ -16,6 +16,7 @@ class CLIBuddyInterface(BaseBackend):
         if not self._allow_stdin:
             stdin = ''
         history = history[-20:] if len(history) > 20 else history
+
         data = {
             "history": history,
             "enriched_history": [],
@@ -23,7 +24,7 @@ class CLIBuddyInterface(BaseBackend):
             "pwd": pwd,
             "buffer": current_line,
             "env": env,
-            "status": 0 or int(status),
+            "status": -1 or int(status),
             "test_request": debug
         }
         response = requests.post(self._url, json=data, timeout=10)

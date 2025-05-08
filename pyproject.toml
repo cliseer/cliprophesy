@@ -1,6 +1,6 @@
 [project]
 name = "cliprophesy"
-version = "0.0.3"
+version = "0.0.8"
 authors = [
   { name="Yaron Greif", email="ygreif@gmail.com" },
 ]
@@ -16,8 +16,8 @@ license-files = ["LICEN[CS]E*"]
 packages = ["src"]
 
 [project.urls]
-Homepage = "https://github.com/pypa/sampleproject"
-Issues = "https://github.com/pypa/sampleproject/issues"
+Homepage = "https://github.com/cliseer/cliprophesy"
+Issues = "https://github.com/cliseer/cliprophesy/issues"
 
 [build-system]
 requires = ["hatchling >= 1.26", "requests"]

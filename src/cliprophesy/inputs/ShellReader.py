@@ -10,7 +10,7 @@ class BaseShellReader:
     def _get_pwd(self):
         return ""
 
-    def _read_history(self, limit:int = 400):
+    def _read_history(self, limit:int = 20):
         return ""
 
     def _get_env_context(self) -> str:
@@ -34,7 +34,7 @@ class ZshShellReader(BaseShellReader):
         return os.environ.get("exit_status") or -1
 
     def _get_pwd(self):
-        return os.environ.get("PWD") or ""
+        return os.environ.get("PWD") or "unknown"
 
     def _read_history(self, limit:int = 20):
         user = os.environ.get("USER")
@@ -64,9 +64,9 @@ class FishShellReader(BaseShellReader):
         return os.environ.get("exit_status") or -1
 
     def _get_pwd(self):
-        return os.environ.get("PWD") or ""
+        return os.environ.get("PWD") or "unknown"
 
-    def _read_history(self, limit:int = 400):
+    def _read_history(self, limit:int = 20):
         hist_name = os.environ.get("fish_history", "fish")
         history_file = os.path.expanduser(f"~/.local/share/fish/{hist_name}_history")
         lines = []
@@ -77,8 +77,8 @@ class FishShellReader(BaseShellReader):
                     if line.strip().startswith("- cmd: "):
                         lines.append(line.strip()[7:])
         except Exception as e:
-            pass  # Fallback gracefully
-        return lines[-limit:]  # Return only the most recent commands
+            pass
+        return lines[-limit:]
 
     def _get_env_context(self) -> str:
         os_name = platform.platform(aliased=True)
@@ -93,6 +93,8 @@ class FishShellReader(BaseShellReader):
         cur_seconds = int(time.time())
         path = os.path.join(logging_path_env, "stdout/")
 
+        if not os.path.exists(path):
+            return ""
         contents = []
         for entry in os.scandir(path):
             if not entry.is_file():
