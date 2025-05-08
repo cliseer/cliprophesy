@@ -68,3 +68,9 @@ class PrettySuggestionFormatter:
                 formatted.append(suggestion.command)
 
         return formatted
+
+
+if __name__ == '__main__':
+    suggestions = ["git log --pretty # hello world", "git revert # boo"]
+    for suggestion in PrettySuggestionFormatter.format_suggestions(suggestions):
+        print(suggestion)

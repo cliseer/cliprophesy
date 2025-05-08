@@ -17,5 +17,5 @@ def get_backend(llm_str):
     elif llm_str == 'openai':
         return openai_backend.OpenAIBackend()
     elif llm_str in ('clibuddy', 'cliseer'):
-        return clibuddy.CLIBuddyInterface(allow_stdin=False)
+        return clibuddy.CLIBuddyInterface(allow_stdin=True)
     return anthropic_backend.AnthropicBackend()
