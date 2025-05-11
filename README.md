@@ -1,6 +1,41 @@
 # cliprophesy
 
-A CLI tool that suggests commands based on your shell history.
+A CLI tool that suggests commands based on your shell history. Meant to be used by [cliseer-fish](https://github.com/cliseer/cliseer-fish)
+
+## Usage
+
+``` fish
+> cliprophesy "echo 'Hello W" --backend cliseer
+echo 'Hello World'
+cliprophesy "echo 'Hello World'" --backend cliseer
+cliprophesy "echo 'Hello World'" --backend openai
+```
+
+## Installation
+
+### Option 1: Using pip (or pipx)
+``` fish
+pip install cliprophesy
+```
+### Option 2: Using pyinstaller
+``` fish
+cd cliprophesy/src/cliprophesy
+pyinstaller --onefile main.py
+```
+
+## Configuration
+
+See configuration information at [cliseer-fish](https://github.com/cliseer/cliseer-fish)
+
+## Privacy Notice
+
+**Important** When invoked the tool sends the following data to the configured AI provider when ran
+
+- Your current and recent shell commands
+- Operating system and shell information
+- Previous command exit codes
+
+This data may inadvertently include sensitive information such as API keys or passwords if present in your history. Use with care
 
 ## Local development
 

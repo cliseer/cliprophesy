@@ -6,7 +6,7 @@ def get_backend_from_args(user_requested, config):
     parser = configparser.ConfigParser()
     if user_requested:
         return get_backend(user_requested)
-    elif parser.read(Path("~/.config/cliseer/settings.cfg").expanduser()):
+    elif parser.read(Path(config).expanduser()):
         return get_backend(parser['settings']['provider'])
     else:
         get_backend('anthropic')
@@ -18,4 +18,4 @@ def get_backend(llm_str):
         return openai_backend.OpenAIBackend()
     elif llm_str in ('clibuddy', 'cliseer'):
         return clibuddy.CLIBuddyInterface(allow_stdin=True)
-    return anthropic_backend.AnthropicBackend()
+    return clibuddy.CLIBuddyInterface(allow_stdin=True)

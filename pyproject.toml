@@ -1,6 +1,6 @@
 [project]
 name = "cliprophesy"
-version = "0.0.9"
+version = "0.1.0"
 authors = [
   { name="Yaron Greif", email="ygreif@gmail.com" },
 ]

@@ -16,12 +16,14 @@ class PrettySuggestionFormatter:
     """Formats command suggestions with pretty aligned comments."""
 
     @staticmethod
-    def parse_suggestions(raw_suggestions: List[str]) -> List[CommandSuggestion]:
+    def parse_suggestions(raw_suggestions: List[str], debug=False) -> List[CommandSuggestion]:
         """Parse raw suggestions into CommandSuggestion objects."""
         result = []
 
         for line in raw_suggestions:
-            if line.startswith('Quick thoughts'):
+            if 'quick thoughts' in line.lower():
+                if debug:
+                    print("debug", line)
                 pass
             elif '#' in line:
                 parts = line.split('#', 1)
@@ -32,8 +34,8 @@ class PrettySuggestionFormatter:
         return result
 
     @staticmethod
-    def format_suggestions(raw_suggestions: List[str]) -> List[str]:
-        suggestions = PrettySuggestionFormatter.parse_suggestions(raw_suggestions)
+    def format_suggestions(raw_suggestions: List[str], debug=False) -> List[str]:
+        suggestions = PrettySuggestionFormatter.parse_suggestions(raw_suggestions, debug)
         """Format suggestions with aligned comments."""
         if not suggestions:
             return []

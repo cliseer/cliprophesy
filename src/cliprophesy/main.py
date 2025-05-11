@@ -8,14 +8,12 @@ def get_completions(command, shell, backend, debug):
     context = reader.get_context()
     return backend.get_suggestions(command, test_request=False, debug=debug, **context)
 
-def format_suggestions(suggestions):
-    return formatting.PrettySuggestionFormatter.format_suggestions(suggestions)
+def format_suggestions(suggestions, debug):
+    return formatting.PrettySuggestionFormatter.format_suggestions(suggestions, debug)
 
 def suggestion_flow(current_line, shell, backend, config_fname, debug):
     backend = common.get_backend_from_args(backend, config_fname)
-    for suggestion in format_suggestions(get_completions(current_line, shell, backend, debug)):
-        if not debug and 'quick thoughts' in suggestion.lower():
-            continue
+    for suggestion in format_suggestions(get_completions(current_line, shell, backend, debug), debug=debug):
         print(suggestion)
 
 def run():

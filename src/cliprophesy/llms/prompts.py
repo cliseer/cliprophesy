@@ -33,7 +33,7 @@ You will receive data in the format
     As in htop # scrollable top w/kill support
 - DO NOT include the current or previous command line buffer as an option
 - The history is ordered from least recent to most recent
-- End your response with the last command suggestion, do not explain the response afterwards
+- END YOUR RESPONSE WITH THE LAST COMMAND SUGGESTION, do not explain the response afterwards
 
 ## Example
 
