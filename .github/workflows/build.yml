@@ -7,9 +7,9 @@ on:
 
 jobs:
   build-linux:
-    name: Build on manylinux2014
+    name: Build on manylinux2021
     runs-on: ubuntu-latest
-    container: quay.io/pypa/manylinux2014_x86_64
+    container: quay.io/pypa/manylinux_2_28_x86_64
     steps:
       - uses: actions/checkout@v4
 
