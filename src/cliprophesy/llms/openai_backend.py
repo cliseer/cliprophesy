@@ -22,7 +22,7 @@ class OpenAIBackend(base.BaseBackend):
                 "temperature": 0.7,
                 "n": 1,
             },
-            timeout=10
+            timeout=3
         )
         data = response.json()
         text = data["choices"][0]["message"]["content"].strip()

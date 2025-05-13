@@ -25,7 +25,7 @@ class AnthropicBackend(base.BaseBackend):
                 "max_tokens": 250,
                 "messages": [{"role": "user", "content": prompt}],
             },
-            timeout=10
+            timeout=3
         )
         data = response.json()
         text = data["content"][0]["text"].strip()

@@ -1,4 +1,5 @@
 import argparse
+import signal
 
 from cliprophesy import common
 from cliprophesy.inputs import ShellReader, formatting
@@ -17,6 +18,10 @@ def suggestion_flow(current_line, shell, backend, config_fname, debug):
         print(suggestion)
 
 def run():
+    # Ignore SIGINT (Ctrl-C)
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+
     parser = argparse.ArgumentParser()
     parser.add_argument("current_line")
     parser.add_argument("--shell", default="fish")
@@ -36,6 +41,14 @@ def run():
             latency = time.time() - start
             print(f"Overall latency {latency}")
         return 0
+    except KeyboardInterrupt as e:
+        if args.debug:
+            print(e)
+        return 1
+    except BrokenPipeError as e:
+        if args.debug:
+            print(e)
+        return 1
     except Exception as e:
         if args.debug:
             print(e)
