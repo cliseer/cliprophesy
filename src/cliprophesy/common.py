@@ -9,7 +9,7 @@ def get_backend_from_args(user_requested, config):
     elif parser.read(Path(config).expanduser()):
         return get_backend(parser['settings']['provider'])
     else:
-        get_backend('anthropic')
+        return clibuddy.CLIBuddyInterface(allow_stdin=True)
 
 def get_backend(llm_str):
     if llm_str == 'anthropic':
