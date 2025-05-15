@@ -70,9 +70,14 @@ jobs:
           name: cliprophesy-macos-${{ github.run_id }}
           path: ./macos
 
+      - uses: actions/checkout@v4
+        with:
+          path: source-code
+
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             ./linux/cliprophesy-linux
             ./macos/cliprophesy-macos
+            ./source-code/settings.cfg
