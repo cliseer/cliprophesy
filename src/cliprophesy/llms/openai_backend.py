@@ -4,11 +4,15 @@ from typing import List
 from cliprophesy.llms import base
 
 class OpenAIBackend(base.BaseBackend):
-    def __init__(self, model="gpt-4o"):
+    def __init__(self, cfg, model="gpt-4o"):
+        super().__init__(cfg)
         self.api_key = os.environ.get("OPENAI_API_KEY", False)
         self.model = os.environ.get("OPENAI_MODEL", model)
 
     def get_suggestions_internal(self, prompt:str) -> List[str]:
+        if not self.api_key:
+            return ["OPENAI_API_KEY required"]
+
         response = requests.post(
             "https://api.openai.com/v1/chat/completions",
             headers={
@@ -22,7 +26,7 @@ class OpenAIBackend(base.BaseBackend):
                 "temperature": 0.7,
                 "n": 1,
             },
-            timeout=3
+            timeout=self.timeout
         )
         data = response.json()
         text = data["choices"][0]["message"]["content"].strip()

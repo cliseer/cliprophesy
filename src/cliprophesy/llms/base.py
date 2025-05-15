@@ -1,5 +1,6 @@
 import time
 from abc import ABC, abstractmethod
+import requests
 from typing import List
 
 from cliprophesy.llms import prompts
@@ -7,7 +8,16 @@ from cliprophesy.llms import prompts
 class BaseBackend:
     MODE = 'default'
 
+    def __init__(self, cfg):
+        self._cfg = cfg
+
+    @property
+    def timeout(self):
+        return int(self._cfg.get('timeout', 3))
+        
     def get_suggestions(self, current_line: str, history: List[str], extended_history: List[str], stdin="", pwd="", status="", env="", test_request: bool = False, debug: bool = False) -> List[str]:
+        if debug:
+            print("Backend", self.__class__.__name__)
         try:
             start_time = time.perf_counter()
             if self.__class__.MODE == 'default':
@@ -21,6 +31,8 @@ class BaseBackend:
                 end_time = time.perf_counter()
                 print("backend call latency", end_time - start_time)
             return suggestions
+        except requests.exceptions.ReadTimeout:
+            return ["The server timed out"]
         except Exception as e:
             if debug:
                 print(e)

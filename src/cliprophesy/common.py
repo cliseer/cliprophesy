@@ -3,19 +3,20 @@ import configparser
 from pathlib import Path
 
 def get_backend_from_args(user_requested, config):
-    parser = configparser.ConfigParser()
+    parser = configparser.ConfigParser({'timeout': 3, 'provider': 'clibuddy'})
+    parser.read(Path(config).expanduser())
     if user_requested:
-        return get_backend(user_requested)
-    elif parser.read(Path(config).expanduser()):
-        return get_backend(parser['settings']['provider'])
+        return get_backend(user_requested, parser['settings'])
+    elif parser:
+        return get_backend(parser['settings']['provider'], parser['settings'])
     else:
         return clibuddy.CLIBuddyInterface(allow_stdin=True)
 
-def get_backend(llm_str):
+def get_backend(llm_str, cfg):
     if llm_str == 'anthropic':
-        return anthropic_backend.AnthropicBackend()
+        return anthropic_backend.AnthropicBackend(cfg)
     elif llm_str == 'openai':
-        return openai_backend.OpenAIBackend()
+        return openai_backend.OpenAIBackend(cfg)
     elif llm_str in ('clibuddy', 'cliseer'):
-        return clibuddy.CLIBuddyInterface(allow_stdin=True)
-    return clibuddy.CLIBuddyInterface(allow_stdin=True)
+        return clibuddy.CLIBuddyInterface(cfg, allow_stdin=True)
+    return clibuddy.CLIBuddyInterface(cfg, allow_stdin=True)

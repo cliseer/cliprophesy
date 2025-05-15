@@ -8,7 +8,8 @@ REMOTE_URL = "https://cliseer-fastapi.fly.dev/v1/completion"
 class CLIBuddyInterface(BaseBackend):
     MODE = 'FULL'
 
-    def __init__(self, url=REMOTE_URL, allow_stdin=True):
+    def __init__(self, cfg, url=REMOTE_URL, allow_stdin=True):
+        super().__init__(cfg)
         self._url = url
         self._allow_stdin = allow_stdin
 
@@ -27,7 +28,7 @@ class CLIBuddyInterface(BaseBackend):
             "status": -1 or int(status),
             "test_request": debug
         }
-        response = requests.post(self._url, json=data, timeout=10)
+        response = requests.post(self._url, json=data, timeout=self.timeout)
         if (debug or test_request) and not 'completions' in response.json():
             raise Exception(response.text)
         data = response.json()
