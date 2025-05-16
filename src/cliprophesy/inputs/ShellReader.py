@@ -44,8 +44,7 @@ class ZshShellReader(BaseShellReader):
         try:
             with open(history_file, 'r') as f:
                 for line in f:
-                    if line.strip().startswith("- cmd: "):
-                        lines.append(line.strip()[7:])
+                    lines.append(line.split(';')[1].strip())
         except Exception as e:
             pass  # Fallback gracefully
         return lines[-limit:]  # Return only the most recent commands

@@ -7,7 +7,7 @@ from cliprophesy.inputs import ShellReader, formatting
 def get_completions(command, shell, backend, debug):
     reader = ShellReader.FishShellReader() if shell == 'fish' else ShellReader.ZshShellReader()
     context = reader.get_context()
-    if not command not context['history']:
+    if not command and not context['history']:
         return ["Shell integration failed"]
     return backend.get_suggestions(command, test_request=False, debug=debug, **context)
 
