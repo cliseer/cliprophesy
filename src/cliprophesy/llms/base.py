@@ -22,7 +22,6 @@ class BaseBackend:
     @property
     def prompt(self):
         if self._cfg.get('prompt', 'long') == 'short':
-            print("Using short prompt")
             return prompts.SHORT_PROMPT
         else:
             print("Using long prompt")

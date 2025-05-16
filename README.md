@@ -37,6 +37,11 @@ See configuration information at [cliseer-fish](https://github.com/cliseer/clise
 
 This data may inadvertently include sensitive information such as API keys or passwords if present in your history. Use with care
 
+## Tags
+
+git tag -a v0.1.5 -m "Release version 0.1.5"
+git push --tags
+
 ## Local development
 
 * Deploying

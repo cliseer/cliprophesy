@@ -31,7 +31,7 @@ class BaseShellReader:
 
 class ZshShellReader(BaseShellReader):
     def _get_last_status(self):
-        return os.environ.get("exit_status") or -1
+        return os.environ.get("$?") or -1
 
     def _get_pwd(self):
         return os.environ.get("PWD") or "unknown"
@@ -47,6 +47,7 @@ class ZshShellReader(BaseShellReader):
                     lines.append(line.split(';')[1].strip())
         except Exception as e:
             pass  # Fallback gracefully
+        import pdb;pdb.set_trace()
         return lines[-limit:]  # Return only the most recent commands
 
     def _get_env_context(self) -> str:
