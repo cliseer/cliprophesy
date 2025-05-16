@@ -24,7 +24,6 @@ class BaseBackend:
         if self._cfg.get('prompt', 'long') == 'short':
             return prompts.SHORT_PROMPT
         else:
-            print("Using long prompt")
             return prompts.PROMPT
 
 
