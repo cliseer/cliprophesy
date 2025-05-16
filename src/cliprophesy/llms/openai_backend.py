@@ -7,7 +7,7 @@ class OpenAIBackend(base.BaseBackend):
     def __init__(self, cfg, model="gpt-4o"):
         super().__init__(cfg)
         self.api_key = os.environ.get("OPENAI_API_KEY", False)
-        self.model = os.environ.get("OPENAI_MODEL", model)
+        self.model = cfg.get('model', model)
 
     def get_suggestions_internal(self, prompt:str) -> List[str]:
         if not self.api_key:

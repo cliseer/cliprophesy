@@ -38,7 +38,7 @@ class ZshShellReader(BaseShellReader):
 
     def _read_history(self, limit:int = 20):
         user = os.environ.get("USER")
-        history_file = os.environ.get("HISTFILE", f"/home/{user}/.zzh_history")
+        history_file = os.environ.get("HISTFILE", f"/home/{user}/.zsh_history")
         lines = []
 
         try:

@@ -10,7 +10,7 @@ class AnthropicBackend(base.BaseBackend):
     def __init__(self, cfg, model="claude-3-haiku-20240307"):
         super().__init__(cfg)
         self.api_key = os.environ.get("ANTHROPIC_API_KEY", False)
-        self.model = os.environ.get("ANTHROPIC_MODEL", model)
+        self.model = cfg.get('model', model)
 
     def get_suggestions_internal(self, prompt:str) -> List[str]:
         if not self.api_key:

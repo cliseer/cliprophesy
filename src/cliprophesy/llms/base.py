@@ -14,6 +14,11 @@ class BaseBackend:
     @property
     def timeout(self):
         return int(self._cfg.get('timeout', 3))
+
+    @property
+    def history_len(self):
+        return int(self._cfg.get('history_len', 20))
+             
         
     def get_suggestions(self, current_line: str, history: List[str], extended_history: List[str], stdin="", pwd="", status="", env="", test_request: bool = False, debug: bool = False) -> List[str]:
         if debug:
@@ -48,7 +53,7 @@ class BaseBackend:
 
     def _build_prompt(self, current_line: str, history, extended_history=[], stdin="", pwd="", status="", env="") -> str:
         """Build the prompt for the LLM."""
-        recent_history = history[-20:] if len(history) > 20 else history
+        recent_history = history[-self.history_len:] if len(history) > self.history_len else history
         recent_history = '\n'.join(recent_history)
 
         return prompts.PROMPT.format(current_line=current_line, history=recent_history, stdin=stdin, pwd=pwd, status=status, env=env)
