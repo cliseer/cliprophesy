@@ -12,7 +12,7 @@ Command line buffer: <current_line>
 
 INPUT_FORMAT_ACTUAL = INPUT_FORMAT_PROMPT.replace('<', '{').replace('>', '}')
 
-LONG_PROMPT = """
+PROMPT = """
 ## Role and Purpose
 You are a helpful assistant that helps users fix mistakes they make in their terminal usage based on their command line history and current command line buffer and previous command status.
 
@@ -77,7 +77,7 @@ docker ps -a # list both running and stopped containers
 {input_format_actual}
 """.format(input_format_prompt=INPUT_FORMAT_PROMPT, input_format_actual=INPUT_FORMAT_ACTUAL)
 
-PROMPT = """
+SHORT_PROMPT = """
 ## Role and Purpose
 You are a helpful assistant that helps users fix mistakes they make in their terminal usage based on their current command line buffer, previous command status, and previous command.
 

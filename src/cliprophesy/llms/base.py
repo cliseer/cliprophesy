@@ -18,8 +18,17 @@ class BaseBackend:
     @property
     def history_len(self):
         return int(self._cfg.get('history_len', 20))
-             
-        
+
+    @property
+    def prompt(self):
+        if self._cfg.get('prompt', 'long') == 'short':
+            print("Using short prompt")
+            return prompts.SHORT_PROMPT
+        else:
+            print("Using long prompt")
+            return prompts.PROMPT
+
+
     def get_suggestions(self, current_line: str, history: List[str], extended_history: List[str], stdin="", pwd="", status="", env="", test_request: bool = False, debug: bool = False) -> List[str]:
         if debug:
             print("Backend", self.__class__.__name__)
@@ -56,4 +65,4 @@ class BaseBackend:
         recent_history = history[-self.history_len:] if len(history) > self.history_len else history
         recent_history = '\n'.join(recent_history)
 
-        return prompts.PROMPT.format(current_line=current_line, history=recent_history, stdin=stdin, pwd=pwd, status=status, env=env)
+        return self.prompt.format(current_line=current_line, history=recent_history, stdin=stdin, pwd=pwd, status=status, env=env)
